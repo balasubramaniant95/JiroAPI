@@ -1,0 +1,38 @@
+#!/bin/bash
+
+function build {
+    docker-compose down --remove-orphans && docker-compose up --detach --build --remove-orphans
+}
+
+function destroy {
+    docker-compose down --remove-orphans
+}
+
+function start {
+    docker-compose start $@
+}
+
+function stop {
+    docker-compose stop $@
+}
+
+function restart {
+    docker-compose restart $@
+}
+
+function logs {
+    docker-compose logs --follow $@
+}
+
+function status {
+    docker-compose ps
+}
+
+function help {
+    echo "$0 <task> <args>"
+    echo "Available Tasks:"
+    compgen -A function | cat -n
+}
+
+TIMEFORMAT="Completed in %3lR"
+time "${@:-help}"
